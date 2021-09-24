@@ -165,20 +165,19 @@ public class RedisSink<IN> extends RichSinkFunction<IN> {
                 this.redisCommandsContainer.publish(key, value);
                 break;
             case ZADD:
-                this.redisCommandsContainer.zadd(optAdditionalKey.orElse(this.additionalKey), value, key);
+                this.redisCommandsContainer.zadd(key, value, optAdditionalKey.orElse(this.additionalKey));
                 break;
             case ZINCRBY:
-                this.redisCommandsContainer.zincrBy(optAdditionalKey.orElse(this.additionalKey), value, key);
+                this.redisCommandsContainer.zincrBy(key, value, optAdditionalKey.orElse(this.additionalKey));
                 break;
             case ZREM:
-                this.redisCommandsContainer.zrem(optAdditionalKey.orElse(this.additionalKey), key);
+                this.redisCommandsContainer.zrem(key, optAdditionalKey.orElse(this.additionalKey));
                 break;
             case HSET:
-                this.redisCommandsContainer.hset(optAdditionalKey.orElse(this.additionalKey), key, value,
-                        optAdditionalTTL.orElse(this.additionalTTL));
+                this.redisCommandsContainer.hset(key, optAdditionalKey.orElse(this.additionalKey), value, optAdditionalTTL.orElse(this.additionalTTL));
                 break;
             case HINCRBY:
-                this.redisCommandsContainer.hincrBy(optAdditionalKey.orElse(this.additionalKey), key, Long.valueOf(value), optAdditionalTTL.orElse(this.additionalTTL));
+                this.redisCommandsContainer.hincrBy(key, optAdditionalKey.orElse(this.additionalKey), Long.valueOf(value), optAdditionalTTL.orElse(this.additionalTTL));
                 break;
             case INCRBY:
                 this.redisCommandsContainer.incrBy(key, Long.valueOf(value));
