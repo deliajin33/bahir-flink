@@ -170,6 +170,13 @@ public interface RedisCommandsContainer extends Serializable {
     void decrBy(String key, Long value);
 
     /**
+     * delete one or more fields from hash set for specified key.
+     * @param key the key name in which field to be deleted
+     * @param fields fields the fields
+     */
+    void hdel(String key, String... fields);
+
+    /**
      * Close the Jedis container.
      *
      * @throws IOException if the instance can not be closed properly

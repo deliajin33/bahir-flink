@@ -99,8 +99,12 @@ public enum RedisCommand {
     /**
      * decrease with fixed num for specified key and expire the key with fixed time.
      */
-    DESCRBY_EX(RedisDataType.STRING);
+    DESCRBY_EX(RedisDataType.STRING),
 
+    /**
+     * delete one or more fields for specified hash key.
+     */
+    HDEL(RedisDataType.HASH);
 
     /**
      * The {@link RedisDataType} this command belongs to.

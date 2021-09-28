@@ -191,6 +191,9 @@ public class RedisSink<IN> extends RichSinkFunction<IN> {
             case DESCRBY_EX:
                 this.redisCommandsContainer.decrByEx(key, Long.valueOf(value), optAdditionalTTL.orElse(this.additionalTTL));
                 break;
+            case HDEL:
+                this.redisCommandsContainer.hdel(key, optAdditionalKey.orElse(this.additionalKey).split(";"));
+                break;
             default:
                 throw new IllegalArgumentException("Cannot process such data type: " + redisCommand);
         }

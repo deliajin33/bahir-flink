@@ -277,6 +277,18 @@ public class RedisClusterContainer implements RedisCommandsContainer, Closeable 
         }
     }
 
+    @Override
+    public void hdel(String key, String... fields) {
+        try {
+            jedisCluster.hdel(key, fields);
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis message with command descry to key {} with decrement {} error message {}",
+                        key, fields, e.getMessage());
+            }
+            throw e;
+        }
+    }
 
     /**
      * Closes the {@link JedisCluster}.

@@ -397,4 +397,22 @@ public class RedisContainer implements RedisCommandsContainer, Closeable {
             releaseInstance(jedis);
         }
     }
+
+    @Override
+    public void hdel(String key, String... fields) {
+        Jedis jedis = null;
+        try {
+            jedis = getInstance();
+            jedis.hdel(key, fields);
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis with decrBy command with increment {}  error message {}",
+                        key, fields, e.getMessage());
+            }
+            throw e;
+        } finally {
+            releaseInstance(jedis);
+        }
+
+    }
 }
