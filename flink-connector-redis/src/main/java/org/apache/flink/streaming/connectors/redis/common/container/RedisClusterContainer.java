@@ -73,6 +73,22 @@ public class RedisClusterContainer implements RedisCommandsContainer, Closeable 
     }
 
     @Override
+    public void hsetNx(String key, String hashField, String value, Integer ttl) {
+        try {
+            jedisCluster.hsetnx(key, hashField, value);
+            if (ttl != null) {
+                jedisCluster.expire(key, ttl);
+            }
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis message with command HSETNX to hash {} of key {} error message {}",
+                        hashField, key, e.getMessage());
+            }
+            throw e;
+        }
+    }
+
+    @Override
     public void hincrBy(final String key, final String hashField, final Long value, final Integer ttl) {
         try {
             jedisCluster.hincrBy(key, hashField, value);

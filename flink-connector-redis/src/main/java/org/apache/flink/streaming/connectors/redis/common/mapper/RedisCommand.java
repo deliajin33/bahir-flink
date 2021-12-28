@@ -79,6 +79,12 @@ public enum RedisCommand {
      */
     HSET(RedisDataType.HASH),
 
+    /**
+     * Sets field in the hash stored at key to value. If key does not exist,
+     * a new key holding a hash is created. If field already exists in the hash, abort.
+     */
+    HSETNX(RedisDataType.HASH),
+
     HINCRBY(RedisDataType.HINCRBY),
 
     /**

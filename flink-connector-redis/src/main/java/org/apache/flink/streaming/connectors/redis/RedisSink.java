@@ -176,6 +176,9 @@ public class RedisSink<IN> extends RichSinkFunction<IN> {
             case HSET:
                 this.redisCommandsContainer.hset(key, optAdditionalKey.orElse(this.additionalKey), value, optAdditionalTTL.orElse(this.additionalTTL));
                 break;
+            case HSETNX:
+                this.redisCommandsContainer.hsetNx(key, optAdditionalKey.orElse(this.additionalKey), value, optAdditionalTTL.orElse(this.additionalTTL));
+                break;
             case HINCRBY:
                 this.redisCommandsContainer.hincrBy(key, optAdditionalKey.orElse(this.additionalKey), Long.valueOf(value), optAdditionalTTL.orElse(this.additionalTTL));
                 break;

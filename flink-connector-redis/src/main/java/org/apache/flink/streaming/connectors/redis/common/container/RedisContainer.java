@@ -106,6 +106,26 @@ public class RedisContainer implements RedisCommandsContainer, Closeable {
     }
 
     @Override
+    public void hsetNx(final String key, final String hashField, final String value, final Integer ttl) {
+        Jedis jedis = null;
+        try {
+            jedis = getInstance();
+            jedis.hsetnx(key, hashField, value);
+            if (ttl != null) {
+                jedis.expire(key, ttl);
+            }
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis message with command HSETNX to key {} and hashField {} error message {}",
+                        key, hashField, e.getMessage());
+            }
+            throw e;
+        } finally {
+            releaseInstance(jedis);
+        }
+    }
+
+    @Override
     public void hincrBy(final String key, final String hashField, final Long value, final Integer ttl) {
         Jedis jedis = null;
         try {
@@ -406,7 +426,7 @@ public class RedisContainer implements RedisCommandsContainer, Closeable {
             jedis.hdel(key, fields);
         } catch (Exception e) {
             if (LOG.isErrorEnabled()) {
-                LOG.error("Cannot send Redis with decrBy command with increment {}  error message {}",
+                LOG.error("Cannot send Redis with hdel command with increment {}  error message {}",
                         key, fields, e.getMessage());
             }
             throw e;
